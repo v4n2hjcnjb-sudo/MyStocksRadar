@@ -1,128 +1,97 @@
-# A股投研雷达 · 分发包
+# A股投研雷达 · 本地投研工作台
 
-把这套本地投研控制台装到另一台 Windows 电脑上：**复制两样东西** —— 发布压缩包解压出来的文件夹 + `PROMPT.md` 里那段提示词。
+一个跑在自己 Windows 电脑上的 A 股投研控制台：把**盘前热点 → 自动选股 → 盘中监控 → 盘后趋势 → 复盘研判**串成一条流水线，数据留在本机，打开即用、无需登录。
 
-装好后双击 `console\start-console.bat`，浏览器打开 `http://127.0.0.1:8080/`，即可看到与源环境一致的五个看板、技巧工坊与任务控制台。
-
----
-
-## 你只需要做两件事
-
-1. 把发布压缩包解压到本机任意目录（例如 `C:\radar`），**路径不要带空格更省心**。
-2. 打开 `PROMPT.md`，把分隔线里的整段文字复制进 WorkBuddy 并发送。
-
-WorkBuddy 会完成环境预检、建虚拟环境、装依赖、写入示例数据、拉起服务并自检。你不需要手工敲任何安装命令。
-
-> 如果不想用 WorkBuddy，也可以直接命令行运行：`python deploy\bootstrap.py`（需已装 Python ≥ 3.10）。
+配合 WorkBuddy 使用：**下载一个包 + 复制一段提示词**，剩下的环境预检、装依赖、写示例数据、拉起服务都交给它完成。
 
 ---
 
-## 双击启动 / 停止（重要）
+## ⬇️ 下载（从这里开始）
 
-| 动作 | 怎么做 |
+| | |
 | --- | --- |
-| 启动 | 双击 `console\start-console.bat`，等端口就绪后浏览器自动打开 |
-| 登录 | **已取消**：本机打开即用，无账号密码；服务只监听 `127.0.0.1` |
-| 停止 | 关闭标题为 **`RadarConsole`** 的服务窗口（或在其中按 `Ctrl+C`）；另一个 launcher 窗口可直接关掉 |
-| 再次使用 | 重新双击一次 bat |
+| **推荐入口** | 👉 **[打开下载与部署页](https://v4n2hjcnjb-sudo.github.io/MyStocksRadar/)** · 页面内含一键复制部署提示词、校验值与常见问题 |
+| **ZIP 直链** | **[radar-pack-1.0.3-win.zip](https://v4n2hjcnjb-sudo.github.io/MyStocksRadar/radar-pack-1.0.3-win.zip)** · 142 KB，浏览器直接下载 |
+| **备用** | [本仓库内的同一份 ZIP](./radar-pack-1.0.3-win.zip) · GitHub 页面需再点一次下载 |
 
-首版**不做开机自启、不注册系统服务**：服务不随 WorkBuddy 会话消失，但也只在 `RadarConsole` 窗口开着的时候运行。bat 为纯 ASCII 英文（cmd 按当前代码页解析 .bat，中文叠加 `chcp 65001` 会把中文片段当命令执行，导致服务根本不启动），会先起服务、等 8080 真正监听后再打开浏览器，并自动为本地回环设置 `NO_PROXY` 绕过代理。
-
----
-
-## 首次打开看到的是示例数据
-
-包里带一份脱敏示例快照（7 只中性演示标的 + 市场级指数/板块数据），只用于让五个看板首次打开不空屏，**不含分发者的任何个人自选股或素材图片**。
-
-在控制台运行任一任务后，脚本会抓取当日真实行情，自动生成新快照并覆盖示例文件（按文件时间取最新）。示例文件内也标注了「运行任务后自动覆盖」。
+- 版本 **1.0.3**｜Windows 10 / 11｜Python ≥ 3.10｜首版仅支持 Windows
+- SHA256：`6ab1aa12ff302a5e18d8490bb65445a21b73703bd0f4f9b879749a9f1ea021b4`
+- Windows 校验：`certutil -hashfile radar-pack-1.0.3-win.zip SHA256`（也可对照 [SHA256SUMS.txt](./SHA256SUMS.txt)）
 
 ---
 
-## 目录结构
+## 它是什么
 
-```
-radar-pack/
-├── PROMPT.md                 复制到 WorkBuddy 的提示词
-├── README.md                 本文件
-├── requirements.txt          依赖（akshare / pandas / numpy / openpyxl 等）
-├── manifest.json             版本 + 文件清单 + SHA256
-├── console/                  页面与本地服务
-│   ├── server.py             单进程 HTTP 服务（默认 127.0.0.1:8080）
-│   ├── start-console.bat     双击启动
-│   ├── 投研雷达控制台.html   任务控制台
-│   ├── 选股.html / workshop.html / theme.css
-├── scripts/                  5 个任务脚本 + 指标算法
-├── config/                   指标注册表 / 规则 / 素材股票池（种子）
-├── demo/                     脱敏示例快照模板
-├── deploy/                   bootstrap.py（一键部署）+ verify_pack.py（交付前校验）
-├── skills/radar-deploy/      WorkBuddy 部署 Skill
-└── data/                     安装后自动生成（运行数据 / config / Materials 素材目录）
-```
+| 能力 | 说明 |
+| --- | --- |
+| 五个看板 | 盘前热点 / 自动选股 / 盘中自选监控 / 盘后趋势 / 复盘研判，覆盖一天的完整投研节奏 |
+| 技巧工坊 | 把收集来的炒股资料整理成指标注册表（评级、权重、启停、作用看板），AI 生成的代码经「固定接口 + 人工审核门」纳入 |
+| 任务控制台 | 一键重跑五个任务、查看运行日志、下载选股 Excel |
+| 数据与时效 | 收盘后自动刷新盘前快照；K 线多源择优，并在报告里标注「当日 / 非当日收盘」 |
 
-安装后会自动生成 `data\`（所有运行数据与配置）与 `.venv\`（独立 Python 环境），二者都不属于分发内容。
+**它也是**：纯本地运行（`127.0.0.1:8080`）、免登录、不注册系统服务、不开机自启、不上传任何使用数据，运行数据与自选清单都写在本机 `data\`。
+
+**它不是**：荐股工具、行情终端或量化交易系统；不含任何下单 / 实盘交易能力，也不承诺收益。
 
 ---
 
-## 五个看板与任务
+## 三步开始
 
-| 看板 | 任务脚本 | 说明 |
-| --- | --- | --- |
-| 盘前热点 | `daily_hot.py` | 指数/广度/板块/外围/政策/风险 |
-| 自动选股 | `stock_pool.py` | 规则过滤 + 综合评分 + Excel 下载 |
-| 盘中自选监控 | `watch_monitor.py` | 自选行情、量比、异动与信号 |
-| 盘后趋势 | `trend_report.py` | 均线/量能/MACD/周线/形态评分 |
-| 复盘研判 | `review_report.py` | 汇总前四者生成复盘与明日研判 |
+1. **解压** — 把 ZIP 解压到任意目录（如 `C:\radar`，路径别带空格）。**解压目录就是安装目录**，不要再复制到别处。
+2. **把提示词交给 WorkBuddy** — 打开解压后的 `PROMPT.md`，把分隔线内的整段文字复制进 WorkBuddy 并发送。它会自动做环境预检、创建 `.venv` 安装依赖、写入脱敏示例快照、拉起服务并自检。
+   > 不想用 WorkBuddy？在解压目录执行 `python deploy\bootstrap.py`（需 Python ≥ 3.10），效果相同。
+3. **打开控制台** — 双击 `console\start-console.bat`，浏览器自动打开 `http://127.0.0.1:8080/`，**无需账号密码**。首次显示的是示例数据，运行任一任务后会自动换成当日真实行情。
 
-`review_report` 运行前会检查「盘前热点」是否为当日收盘后快照，若陈旧会自动刷新一次。
+停止服务：关闭标题为 `RadarConsole` 的服务窗口（另一个 launcher 窗口可直接关掉）。
 
 ---
 
-## 配置与个性化
+## 常见问题
 
-- `data\config\watch_stock.csv`：自选股清单（`code,name` 每行一只），也可在控制台左侧「自选股票清单」里直接编辑保存。
-- `data\config\indicators.json`：技巧工坊的指标注册表（评级/权重/启停/作用看板）。
-- `data\Materials\`：技巧素材图片，可在技巧工坊页面上传、刷新、打开文件夹。
-
----
-
-## 升级
-
-只覆盖 `console\` 与 `scripts\` 两个目录。**绝不覆盖** `data\` 与 `Materials\` —— 那里是运行数据和你自己的素材。升级前建议先备份整个 `data\`。
+- **我的电脑需要一直开机吗？** 不需要。下载页与 ZIP 托管在 GitHub Pages，与你的机器无关；只有你自己要看盘时，本机服务才需要开着。
+- **双击 bat 后服务没起来？** 若窗口出现中文乱码命令，说明 bat 被另存成了非 ASCII 编码，重新解压原包即可；若 8080 已有健康服务，bat 只打开浏览器、不再启动第二个实例。
+- **页面 502 / 打不开？** 本机代理若连 `127.0.0.1` 都拦截，给 `127.0.0.1;localhost` 加代理绕过（bat 已自动设置 `NO_PROXY`）。
+- **装依赖失败？** 用默认官方 PyPI；代理会拦截镜像站时**不要加 `--mirror`**。
+- 完整部署与排障说明见包内 `skills\radar-deploy\references\部署说明.md`。
 
 ---
 
-## 安全与限制
+## 包里有什么 / 没有什么
 
-- 服务默认只绑定 `127.0.0.1`，不要改成 `0.0.0.0` 后暴露到公网；如需远程访问请自行加 TLS 反向代理。
-- 本机若设了 `HTTP_PROXY` / `HTTPS_PROXY`：bat 与 bootstrap 已自动绕过 `127.0.0.1`；镜像站被代理拦截时**不要加 `--mirror`**，用默认官方 PyPI。
-- 默认免登录，不生成任何密码文件；将来若要公网部署，把 `start-console.bat` 里的 `AUTH_REQUIRED` 设为 `1` 恢复登录，并配置强密码 + TLS 反向代理。
-- 行情来自 akshare 的公开接口，需要联网；非交易时段或网络受限时可能抓不到数据。
-- 首版仅支持 Windows（「打开文件夹」「一键启动 WorkBuddy」依赖 Windows API）。
-- 所有内容仅为公开市场数据的统计整理，不构成投资建议。
-- 第三方依赖（akshare / pandas / numpy / openpyxl 等）各自遵循其开源许可，行情数据版权归相应数据源所有。
+**包含**：页面与本地服务 `console\`、5 个任务脚本 `scripts\`、指标与规则 `config\`、脱敏示例快照 `demo\`、一键部署与交付校验 `deploy\`、WorkBuddy 部署 Skill，以及 `manifest.json`（34 个文件的版本清单 + SHA256）。
 
-更完整的部署/排障说明见 `skills\radar-deploy\references\部署说明.md`。
+**不包含**：`.venv\`（写死源机器 Python 绝对路径，换机器必失效）、`data\`（本机运行数据与自选清单）、任何个人自选股与素材图片。示例快照只含 7 只中性演示标的与市场级数据。
+
+> 发布者注意：只打包 `manifest.json` 白名单里的 34 个文件外加清单自身，`.venv\` 与 `data\` 绝不能随包分发。详见包内 README「发布者须知」。
 
 ---
 
-## 发布者须知：只打包 manifest 白名单（重要）
+## 文档
 
-运行过一次的目录里会生成 `.venv\` 与 `data\`。**这两项绝不能随包发布**：
+| 想了解 | 看哪里 |
+| --- | --- |
+| 下载、复制提示词、校验 | [在线下载页](https://v4n2hjcnjb-sudo.github.io/MyStocksRadar/) |
+| 完整目录、配置、升级、排障 | 包内 `README.md` 与 `skills\radar-deploy\references\部署说明.md` |
+| 部署提示词原文 | 包内 `PROMPT.md` |
+| 文件清单与完整性 | 包内 `manifest.json`、本仓库 `SHA256SUMS.txt` |
 
-- `.venv\pyvenv.cfg` 写死了源机器的 Python 绝对路径，换一台机器就失效；而 `start-console.bat` 会优先使用这个 `.venv`，带着它发布等于让接收者双击即失败。
-- `data\` 是本机运行数据与自选清单；带着它发布，接收者会看到旧日期数据，且 `bootstrap.py` 会因为目录非空而跳过示例快照写入。
+问题与建议欢迎在 [Issues](https://github.com/v4n2hjcnjb-sudo/MyStocksRadar/issues) 提出。
 
-发布包应包含 `manifest.json` 的 `files` 字段列出的 34 个文件，**外加 `manifest.json` 自身**（它是清单文件，不列在自己的 `files` 里，否则哈希会自引用循环）。可据此生成压缩包：
+---
 
-```python
-# 在 radar-pack 目录执行
-import json, pathlib, zipfile
-m = json.loads(pathlib.Path("manifest.json").read_text(encoding="utf-8"))
-with zipfile.ZipFile("../radar-pack-" + m["version"] + "-win.zip", "w",
-                     zipfile.ZIP_DEFLATED) as z:
-    for it in m["files"]:
-        z.write(it["path"], "radar-pack/" + it["path"])
-    z.write("manifest.json", "radar-pack/manifest.json")
-```
+## 开源与授权
 
-注意：`deploy\verify_pack.py` 会主动跳过 `.venv\` 与 `data\` 目录，因此它「校验通过」只代表 34 个源码文件干净，**不代表整个运行目录可以直接压缩发布**。打包后请在一台干净机器（或空目录解压）按上面「你只需要做两件事」实测一次：依赖安装 → 示例快照写入 → 双击 bat → 浏览器打开首页。
+本仓库及分发包中的代码、页面与文档采用 **MIT License**（见 [LICENSE](./LICENSE)）：可自由使用、修改、分发乃至商用，只需保留版权与许可声明；软件按「现状」提供，不附带任何担保。
+
+几点口径说明，避免误读：
+
+- 第三方 Python 依赖（akshare / pandas / numpy / openpyxl 等）各自遵循其开源许可；行情数据版权归相应数据源所有，本项目的 MIT 授权**不覆盖**它们。
+- 示例快照、指标注册表与策略规则文本仅为工具演示与研究素材，不构成投资建议。
+- 二次分发时请保留本页的免责声明，并注明你所做的修改。
+- 项目不含实盘交易能力，也不收集或上传任何使用数据。
+
+---
+
+## 免责声明
+
+本项目仅对公开市场数据做统计整理，所有内容仅供学习、研究与工具演示，**不构成任何证券投资建议、要约或收益承诺**。据此操作，风险自负。作者不对数据的完整性、及时性与可用性作任何保证，亦不对使用本项目产生的任何直接或间接损失承担责任。投资有风险，入市需谨慎。
