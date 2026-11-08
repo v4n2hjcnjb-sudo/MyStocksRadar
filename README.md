@@ -13,6 +13,7 @@
 | **推荐入口** | 👉 **[打开下载与部署页](https://v4n2hjcnjb-sudo.github.io/MyStocksRadar/)** · 页面内含一键复制部署提示词、校验值与常见问题 |
 | **ZIP 直链** | **[radar-pack-1.0.3-win.zip](https://v4n2hjcnjb-sudo.github.io/MyStocksRadar/radar-pack-1.0.3-win.zip)** · 142 KB，浏览器直接下载 |
 | **备用** | [本仓库内的同一份 ZIP](./radar-pack-1.0.3-win.zip) · GitHub 页面需再点一次下载 |
+| **版本历史** | [v1.0.3 Release · 更新日志](https://github.com/v4n2hjcnjb-sudo/MyStocksRadar/releases/tag/v1.0.3) · 版本归档与资产下载 |
 
 - 版本 **1.0.3**｜Windows 10 / 11｜Python ≥ 3.10｜首版仅支持 Windows
 - SHA256：`6ab1aa12ff302a5e18d8490bb65445a21b73703bd0f4f9b879749a9f1ea021b4`
