@@ -1,0 +1,4 @@
+# A股投研雷达 1.0.3 · 发布包校验
+# Windows 校验命令: certutil -hashfile radar-pack-1.0.3-win.zip SHA256
+# macOS / Linux 校验命令: shasum -a 256 radar-pack-1.0.3-win.zip
+6ab1aa12ff302a5e18d8490bb65445a21b73703bd0f4f9b879749a9f1ea021b4  radar-pack-1.0.3-win.zip

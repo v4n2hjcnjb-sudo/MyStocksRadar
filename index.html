@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A股投研雷达 · 下载与部署</title>
+<style>
+:root{color-scheme:light dark;--bg:#f7f7f5;--surface:#ffffff;--text:#1c1c1a;--muted:#666560;--line:#e3e2de;--accent:#185fa5;--accent-soft:#e6f1fb;--code:#f2f2ef}
+@media (prefers-color-scheme:dark){:root{--bg:#16181b;--surface:#1e2125;--text:#ececea;--muted:#a3a5a8;--line:#34383d;--accent:#85b7eb;--accent-soft:#0c447c;--code:#262a2f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.65}
+main{max-width:820px;margin:0 auto;padding:48px 24px 64px}
+h1{font-size:32px;line-height:1.25;margin:8px 0 12px;font-weight:600}
+h2{font-size:18px;margin:0 0 14px;font-weight:600}
+p{margin:0 0 12px}
+.eyebrow{font-size:13px;color:var(--accent);letter-spacing:.06em;margin:0}
+.lead{font-size:16px;color:var(--muted);max-width:640px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 28px}
+.meta span{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:var(--surface)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;margin:0 0 20px}
+.primary{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;text-decoration:none;border-radius:10px;padding:12px 20px;cursor:pointer;border:1px solid var(--accent);font-family:inherit}
+.btn.main{background:var(--accent);color:#fff}
+@media (prefers-color-scheme:dark){.btn.main{color:#0c1826}}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn:hover{opacity:.88}
+.hint{width:100%;font-size:13px;color:var(--muted);margin:6px 0 0}
+code{background:var(--code);border-radius:5px;padding:2px 6px;font-family:ui-monospace,Consolas,"Courier New",monospace;font-size:13px;word-break:break-all}
+ol.steps{margin:0;padding-left:22px}
+ol.steps li{margin-bottom:14px;padding-left:6px}
+ol.steps b{display:block;font-size:15px;margin-bottom:2px}
+ol.steps span{color:var(--muted);font-size:14px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:640px){.two{grid-template-columns:1fr}main{padding:32px 18px 48px}}
+ul{margin:0;padding-left:20px;color:var(--muted);font-size:14px}
+li{margin-bottom:6px}
+textarea{width:100%;min-height:260px;background:var(--code);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:14px;font-family:ui-monospace,Consolas,"Courier New",monospace;font-size:12.5px;line-height:1.6;resize:vertical}
+.note{font-size:13px;color:var(--muted)}
+footer{margin-top:32px;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+<header>
+<p class="eyebrow">WorkBuddy 本地应用 · 分发包</p>
+<h1>A股投研雷达</h1>
+<p class="lead">一套跑在自己电脑上的投研控制台：五个看板、技巧工坊与任务控制台。本机免登录、数据不出本机、双击即可启动。</p>
+<div class="meta">
+<span>版本 1.0.3</span><span>Windows 10 / 11</span><span>142 KB · ZIP</span><span>更新于 2026-11-08</span><span>Python ≥ 3.10</span>
+</div>
+</header>
+
+<section class="card primary">
+<a class="btn main" href="radar-pack-1.0.3-win.zip" download>下载分发包 · ZIP</a>
+<button class="btn ghost" id="copyPrompt" type="button">复制部署提示词</button>
+<p class="hint">解压后把提示词整段粘进 WorkBuddy 发送即可；不想用 WorkBuddy 也可命令行运行 <code>python deploy\bootstrap.py</code>。</p>
+</section>
+
+<section class="card">
+<h2>三步开始</h2>
+<ol class="steps">
+<li><b>1 · 解压到任意目录</b><span>例如 <code>C:\radar</code>，路径尽量不要带空格。解压后得到 <code>radar-pack</code> 文件夹，就地部署，不要再复制到别处。</span></li>
+<li><b>2 · 复制提示词给 WorkBuddy</b><span>点上方「复制部署提示词」，粘贴进对话框发送。它会自动预检、建虚拟环境、装依赖、写入示例数据并自检服务。</span></li>
+<li><b>3 · 双击启动</b><span>运行 <code>console\start-console.bat</code>，端口就绪后浏览器自动打开 <code>http://127.0.0.1:8080/</code>。保留标题为 <code>RadarConsole</code> 的服务窗口，另一个窗口可直接关掉。</span></li>
+</ol>
+</section>
+
+<div class="two">
+<section class="card">
+<h2>包里有什么</h2>
+<ul>
+<li>五个看板：盘前热点、自动选股、盘中监控、盘后趋势、复盘研判</li>
+<li>技巧工坊：把资料整理成可量化指标</li>
+<li>一键部署脚本与交付校验器</li>
+<li>供 WorkBuddy 使用的部署 Skill 与提示词</li>
+<li>脱敏示例快照：首次打开不空屏，运行任务后自动换成当日真实行情</li>
+<li>manifest.json：35 个文件清单与逐文件 SHA256</li>
+</ul>
+</section>
+<section class="card">
+<h2>不包含什么</h2>
+<ul>
+<li>不含任何个人自选股、素材图片或历史运行数据</li>
+<li>不含虚拟环境（换机器会失效，首次部署自动创建）</li>
+<li>不含账号密码：本机免登录，服务只监听 127.0.0.1</li>
+<li>不含开机自启与系统服务</li>
+<li>不含可执行文件，全部为源码与文本</li>
+</ul>
+</section>
+</div>
+
+<section class="card">
+<h2>校验文件完整性</h2>
+<p class="note">下载后可核对 SHA256，确认文件未被替换：</p>
+<p><code>6ab1aa12ff302a5e18d8490bb65445a21b73703bd0f4f9b879749a9f1ea021b4</code></p>
+<p class="note">Windows 命令行执行：<code>certutil -hashfile radar-pack-1.0.3-win.zip SHA256</code>；包内 <code>deploy\verify_pack.py</code> 还可复核每一个源码文件。</p>
+</section>
+
+<section class="card">
+<h2>部署提示词全文</h2>
+<textarea id="prompt" readonly spellcheck="false">请帮我在这台 Windows 电脑上部署「A股投研雷达」本地控制台。
+
+**一、定位分发包**
+在我下载/解压的目录里找到同时含有 `deploy\bootstrap.py`、`console\server.py`、`demo\manifest.json` 的文件夹，记为 `&lt;PACK&gt;`（就地部署，解压目录就是安装目录，不要复制到别处）。若找不到，先向我询问路径，不要猜测、不要创建同名空目录。
+
+**二、环境预检**（任一项不满足就停止并说明原因，不要继续）
+- 操作系统为 Windows，且 `python --version` ≥ 3.10
+- 端口 8080 未被占用（若已有本服务在监听，直接打开浏览器即可，不要再启动第二个实例）
+- `&lt;PACK&gt;` 内 `console\`、`scripts\`、`config\`、`demo\`、`requirements.txt` 齐全
+
+**三、执行部署**
+1. 运行 `python &lt;PACK&gt;\deploy\verify_pack.py`。退出码必须为 0；若非 0，把问题清单原样给我并立即停止——这表示包里混入了不该分发的内容。
+2. 把 `&lt;PACK&gt;\skills\radar-deploy` 整个目录复制到 `%USERPROFILE%\.workbuddy\skills\radar-deploy`，然后提示我在 WorkBuddy 中信任/启用一次这个 Skill，供以后升级和排障使用。**此步失败不阻断部署**，说明情况后继续。
+3. 运行 `python &lt;PACK&gt;\deploy\bootstrap.py`。脚本会：建 `.venv` 并安装依赖 → 生成演示自选清单 → 写入示例快照 → 拉起服务窗口 → 自检 `/api/health` 与免登录 API（本机回环探测自动绕开代理）。**若本机代理会拦截镜像站，不要加 `--mirror`**，用默认官方 PyPI。
+
+**四、硬性约束**
+- 禁止覆盖 `&lt;PACK&gt;\data\`、`&lt;PACK&gt;\data\config\`、`Materials\` 中任何**已存在**的内容。
+- 禁止修改包内 Python 源码来绕过任何报错。
+- 任何一步失败立即停止，说明失败原因和回滚方式（只需删除 `&lt;PACK&gt;\.venv` 与 `&lt;PACK&gt;\data` 后重跑，代码文件不受影响）。
+- 不要注册开机自启、不要创建系统服务；服务只由 `console\start-console.bat` 双击启动。
+
+**五、完成后向我汇报**
+- 访问地址 `http://127.0.0.1:8080/`（**本机免登录，打开即用**；服务只监听 127.0.0.1）
+- 数据目录的绝对路径
+- 启动方式（双击 `console\start-console.bat`）与停止方式（关闭标题为 `RadarConsole` 的服务窗口）
+- 升级注意事项（只覆盖 `console\` 与 `scripts\`，绝不覆盖 `data\` 与 `Materials\`）
+- 首次打开显示的是示例数据，运行任一任务后会自动换成当日真实行情
+- 若服务窗口没能自动拉起，明确提示我手动双击 bat，不要假装部署已完全成功（非交互会话里自动拉起的窗口常常不存活）</textarea>
+<p class="note" style="margin-top:12px">提示词来自包内 <code>PROMPT.md</code>；换端口、只校验不部署等进阶选项见该文件备注。</p>
+</section>
+
+<footer>
+仅对公开市场数据做统计整理，不构成投资建议。行情来自 akshare 公开接口，需联网，非交易时段或网络受限时可能抓不到数据。首版仅支持 Windows，服务默认只绑定 127.0.0.1，请勿直接暴露公网。第三方依赖各自遵循其开源许可。<br>
+A股投研雷达 1.0.3 · 分发包共 35 个条目 · 校验值以本页 SHA256 为准
+</footer>
+</main>
+<script>
+(function(){
+  var btn=document.getElementById('copyPrompt');
+  var ta=document.getElementById('prompt');
+  btn.addEventListener('click',async function(){
+    var ok=false;
+    try{await navigator.clipboard.writeText(ta.value);ok=true;}catch(e){
+      ta.focus();ta.select();
+      try{ok=document.execCommand('copy');}catch(e2){ok=false;}
+    }
+    btn.textContent=ok?'已复制，去 WorkBuddy 粘贴':'复制失败，请手动选中下方文本';
+    setTimeout(function(){btn.textContent='复制部署提示词';},2600);
+  });
+})();
+</script>
+</body>
+</html>
